@@ -1,0 +1,15 @@
+pipeline:
+  build:
+    image: hashicorp/terraform:latest
+    environment:
+      - ENV=dev
+    secrets:
+      - ENV
+      - GOOGLE_CREDENTIALS
+      - GOOGLE_PROJECT
+      - BACKEND_CONFIG_BUCKET
+    commands:
+      - export
+      - terraform init -backend-config="bucket=$BACKEND_CONFIG_BUCKET"
+      - terraform plan
+      - terraform apply
